@@ -1,17 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Categorias</title>
-</head>
-
-<body>
     <h1>Crear</h1>
     <h5>Formulario para crear Categorias</h5>
     <hr>
-</body>
+    <form action="#" method="POST" id="frmSaveData">
+    <div class="row">
+        <div class="col">
+            <label>Nombre</label>
+            <input type="text" name="nombre" class="form-control">
+        </div>
+    </div>
+    <hr>
+    <div class="row text-center">
+        <div class="col">
+            <button type="submit" class="btn btn-lg btn-success">
+                Guardar
+            </button>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-lg btn-danger" data-bs-dismiss="modal">
+                Cancelar
+            </button>
+        </div>
+    </div>
+</form>
 
-</html>

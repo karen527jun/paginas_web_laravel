@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home',['nombre'=>'Karen', 'Apellido'=>'Martinez']);
+    return view('home',['nombre'=>'Karen', 'apellido'=>'Martinez']);
 });
 
 //Productos
@@ -52,4 +52,15 @@ Route::get('categories/create', function(){
 });
 Route::get('categories/edit', function(){
     return view('categories/update');
+});
+
+//Marcas
+Route::get('marca/show', function(){
+    return view('marcas/show');
+});
+Route::get('marca/create', function(){
+    return view('marcas/create');
+});
+Route::get('marca/edit', function(){
+    return view('marcas/update');
 });

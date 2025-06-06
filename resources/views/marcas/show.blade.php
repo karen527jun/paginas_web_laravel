@@ -1,22 +1,24 @@
 @extends('layout.app')
-@section('title', 'Categorias')
+@section('title', 'Marcas')
 @section('content')
-<hr>
-<nav aria-label="breadcrumb">
+    <hr>
+    <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item "><a href="/">Inicio</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Categorias</li>
+            <li class="breadcrumb-item active" aria-current="page">Marcas</li>
         </ol>
     </nav>
+    <hr>
     <div class="card">
         <div class="card-header">
             <div class="row text-center">
                 <div class="col">
-                    <h3>Listado de categorías</h3>
+                    <h3>Listado de Marcas</h3>
                 </div>
                 <div class="col">
-                    <button class="btn btn-md btn-dark" id="addForm" path="/categories/create" data-bs-toggle="modal" data-bs-target="#myModal">
-                        Crear Categoría
+                    <button class="btn btn-md btn-dark" id="addForm" path="/marca/create" data-bs-toggle="modal"
+                        data-bs-target="#myModal">
+                        Crear Marca
                     </button>
                 </div>
             </div>
@@ -31,12 +33,13 @@
                 <tbody>
                     <tr>
                         <td>1</td>
-                        <td>Super Cliente</td>
+                        <td>Pumas</td>
                         <td>
-                            <a class="btn btn-sm btn-success edit" path="/categories/edit" data-bs-toggle="modal" data-bs-target="#myModal">
+                            <a class="btn btn-sm btn-success edit" path="/marca/edit" data-bs-toggle="modal"
+                                data-bs-target="#myModal">
                                 Editar
                             </a>
-                            <a class="btn btn-sm btn-danger delete" path="/destroy">
+                            <a class="btn btn-sm btn-danger delete" path="/marca/destroy">
                                 Eliminar
                             </a>
                         </td>
@@ -45,4 +48,5 @@
             </table>
         </div>
     </div>
+
 @endsection

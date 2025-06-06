@@ -1,5 +1,4 @@
-
-    <form action="#" method="POST" id="frmUpdateData">
+<form action="#" method="POST" id="frmSaveData">
     <div class="row">
         <div class="col">
             <label>Nombre</label>
@@ -20,4 +19,3 @@
         </div>
     </div>
 </form>
-
