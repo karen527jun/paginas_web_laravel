@@ -8,7 +8,7 @@
     {{-- Aquí irá el título de cada página --}}
     <title>@yield('title')</title>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-    <link rel="stylesheet" href="{{ asset('js/sweetalert/sweetalert2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('recursos/sweetalert/sweetalert2.min.css') }}">
 </head>
 
 <body>
@@ -60,9 +60,9 @@
         </div>
     </div>
     {{-- archivos js globales --}}
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
-    <script src="{{ asset('js/sweetalert/sweetalert2.all.min.js') }}"></script>
-    <script src="{{ asset('js/custom.js') }}"></script>
+    <script src="{{ asset('recursos/jquery.min.js') }}"></script>
+    <script src="{{ asset('recursos/sweetalert/sweetalert2.all.min.js') }}"></script>
+    <script src="{{ asset('recursos/js/custom.js') }}"></script>
 </body>
 
 </html>
