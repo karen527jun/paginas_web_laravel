@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Marca;
-use App\Models\Producto;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
-
-class ProductoController extends Controller
+class MarcaController extends Controller
 {
     public function __construct()
     {
@@ -19,43 +17,39 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        return view('products/show');
+        return view('marcas/show');
+
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()//cargar formulario
+    public function create()
     {
-        $marcas = Marca::all();//extraer marcas
-         return view('products/create')->with(['marcas'=>$marcas]);
-    }
-
-    public function validarCampos($request){
-        return Validator::make($request->all(),[
-            'nombre' => 'required',
-            'precio' => 'required',
-            'marca' => 'required'
-        ], [
-             'nombre.required' => 'Nombre es obligatorio',
-            'precio.required' => 'Precio es obligatorio',
-            'marca.required' => 'Marca es obligatorio'
-        ]);
+         return view('marcas/create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
+    public function validarCampos($request){
+        return Validator::make($request->all(),[
+            'nombre' => 'required',
+        ], [
+             'nombre.required' => 'Nombre es obligatorio',
+        ]);
+    }
+
     public function store(Request $request)
     {
-        $validacion = $this->validarCampos($request);
+         $validacion = $this->validarCampos($request);
         if($validacion->fails()){
             return response()->json([
                 'code'=> 422,
                 'message' => $validacion->messages()
             ],422);
         }else{
-            $producto = Producto::create($request->all());
+            $marca = Marca::create($request->all());
             return response()->json([
                  'code'=> 200,
                 'message' => "Se creo el registro correctamente"
@@ -64,7 +58,7 @@ class ProductoController extends Controller
     }
 
     /**
-     * Display the specified resource. string $id
+     * Display the specified resource.
      */
     public function show(Request $request)
     {
@@ -73,7 +67,7 @@ class ProductoController extends Controller
 
         //para extraer todos los registros
         if ($itemsPerPage == -1) {
-            $itemsPerPage =  Producto::count();
+            $itemsPerPage =  Marca::count();
             $skip = 0;
         }
 
@@ -86,29 +80,27 @@ class ProductoController extends Controller
         $search = "%$search%";
 
         //get register filtered
-        $filteredCount = Producto::getFilteredData($search)->count();
-        $producto = Producto::allDataSearched($search, $sortBy, $sort, $skip, $itemsPerPage);
+        $filteredCount = Marca::getFilteredData($search)->count();
+        $marca = Marca::allDataSearched($search, $sortBy, $sort, $skip, $itemsPerPage);
         //esto es para reutilizar la funcion para generar datatable en functions.js
-        $producto = $producto->map(function ($producto) {
-            $producto->path = 'products';//sirve para la url de editar y eliminar
-            return $producto;
-        });
-        //se retorna una array estructurado para el data table
-        return response()->json([
+        $marca = $marca->map(function ($marca) {
+            $marca->path = 'marcas';//sirve para la url de editar y eliminar
+            return $marca;
+    });
+    return response()->json([
             'draw' => intval($request->input('draw')),
-            'recordsTotal' => Producto::count(),
+            'recordsTotal' => Marca::count(),
             'recordsFiltered' => $filteredCount,
-            'data' => $producto]);
-    }
+            'data' => $marca]);
+}
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        $marcas = Marca::all();
-        $producto =  Producto::find($id);
-        return view('products/update')->with(['marcas' =>$marcas,'producto'=> $producto]);
+        $marca = Marca::find($id);
+        return view('marcas/update')->with(['marca'=>$marca]);
     }
 
     /**
@@ -116,6 +108,7 @@ class ProductoController extends Controller
      */
     public function update(Request $request, string $id)
     {
+
          $validacion = $this->validarCampos($request);
          if($validacion->fails()){
             return response()->json([
@@ -123,12 +116,10 @@ class ProductoController extends Controller
                 'message' => $validacion->messages()
             ],422);
         }else{
-            $producto = Producto::find($id);
-            if($producto){
-                $producto->update([
+            $marca = Marca::find($id);
+            if($marca){
+                $marca->update([
                     'nombre'=>$request->nombre,
-                    'precio'=>$request->precio,
-                    'marca'=>$request->marca
                 ]);
                 return response()->json([
                 'code'=> 200,
@@ -141,6 +132,7 @@ class ProductoController extends Controller
             ],404);
             }
         }
+
     }
 
     /**
@@ -148,9 +140,10 @@ class ProductoController extends Controller
      */
     public function destroy(string $id)
     {
-        $producto = Producto::find($id);
-        if($producto){
-            $producto->delete();
+        try {
+            $marca = Marca::find($id);
+        if($marca){
+            $marca->delete();
             return response()->json([
                 'code'=> 200,
                 'message' => "Registro actualizado"
@@ -161,5 +154,12 @@ class ProductoController extends Controller
                 'message' => "Registro no encontrado"
             ],404);
             }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'code'=> 404,
+                'message' => "Registro no puede ser eliminado"
+            ],404);
+        }
+
     }
 }

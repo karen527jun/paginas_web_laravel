@@ -1,9 +1,12 @@
 
-    <form action="#" method="POST" id="frmUpdateData">
+    <form action="/categories/{{$categoria->codigo}}" method="POST" id="frmUpdateData">
     <div class="row">
         <div class="col">
             <label>Nombre</label>
-            <input type="text" name="nombre" class="form-control">
+            <input type="text" name="nombre" class="form-control" value="{{$categoria->nombre}}">
+            <span class="invalid-feedback d-block" key="nombre" role="alert">
+                <strong class="mensaje"></strong>
+            </span>
         </div>
     </div>
     <hr>

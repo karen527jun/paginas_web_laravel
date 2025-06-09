@@ -9,6 +9,8 @@
     <title>@yield('title')</title>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('recursos/sweetalert/sweetalert2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('recursos/datatables/datatables.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
 </head>
 
 <body>
@@ -26,21 +28,23 @@
                         <a class="nav-link active" aria-current="page" href="/">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/products/show">Productos</a>
+                        <a class="nav-link" href="/products">Productos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/marca/show">Marcas</a>
+                        <a class="nav-link" href="/marcas">Marcas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/clients/show">Clientes</a>
+                        <a class="nav-link" href="/clients">Clientes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/categories/show">Categorias</a>
+                        <a class="nav-link" href="/categories">Categorias</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
+    {{-- agregando token --}}
+    @csrf
     <div class="container-fluid">
         {{-- Aquí irá el contenido de todas las páginas --}}
         @yield('content')
@@ -62,7 +66,11 @@
     {{-- archivos js globales --}}
     <script src="{{ asset('recursos/jquery.min.js') }}"></script>
     <script src="{{ asset('recursos/sweetalert/sweetalert2.all.min.js') }}"></script>
+    <script src="{{ asset('recursos/datatables/datatables.min.js')}}"></script>
+    <script src="{{ asset('recursos/js/functions.js') }}"></script>
     <script src="{{ asset('recursos/js/custom.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"></script>
+    @yield('scripts')
 </body>
 
 </html>

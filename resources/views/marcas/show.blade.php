@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('layouts.app')
 @section('title', 'Marcas')
 @section('content')
     <hr>
@@ -16,7 +16,7 @@
                     <h3>Listado de Marcas</h3>
                 </div>
                 <div class="col">
-                    <button class="btn btn-md btn-dark" id="addForm" path="/marca/create" data-bs-toggle="modal"
+                    <button class="btn btn-md btn-dark" id="addForm" path="/marcas/create" data-bs-toggle="modal"
                         data-bs-target="#myModal">
                         Crear Marca
                     </button>
@@ -24,29 +24,33 @@
             </div>
         </div>
         <div class="card-body">
-            <table class="table table-hover table-bordered">
+            <table class="table table-hover table-bordered" id="datatables">
                 <thead>
                     <th>Codigo</th>
                     <th>Nombre</th>
                     <th>Acciones</th>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Pumas</td>
-                        <td>
-                            <a class="btn btn-sm btn-success edit" path="/marca/edit" data-bs-toggle="modal"
-                                data-bs-target="#myModal">
-                                Editar
-                            </a>
-                            <a class="btn btn-sm btn-danger delete" path="/marca/destroy">
-                                Eliminar
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
             </table>
         </div>
     </div>
 
+@endsection
+@section('scripts')
+<script type="text/javascript">
+    $(document).ready(function () {
+        var ruta = "/marcas/show";
+        var columnas = [
+            {
+                data: 'codigo'
+            },
+            {
+                data: 'nombre'
+            },
+            {
+                data: 'codigo'
+            }
+        ]
+        dt = generateDataTable(ruta, columnas);
+    });
+</script>
 @endsection

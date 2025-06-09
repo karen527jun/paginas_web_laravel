@@ -1,8 +1,11 @@
-<form action="#" method="POST" id="frmUpdateData">
+<form action="/marcas/{{$marca->codigo}}" method="POST" id="frmUpdateData">
     <div class="row">
         <div class="col">
             <label>Nombre</label>
-            <input type="text" name="nombre" class="form-control">
+            <input type="text" name="nombre" value="{{$marca->nombre}}" class="form-control">
+            <span class="invalid-feedback d-block" key="nombre" role="alert">
+                <strong class="mensaje"></strong>
+            </span>
         </div>
     </div>
     <hr>

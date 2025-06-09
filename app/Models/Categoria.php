@@ -5,23 +5,25 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Marca extends Model
+class Categoria extends Model
 {
     use HasFactory;
-    protected $table = "marcas";
+
+    //variables
+
+    protected $table="categorias";
     protected $primaryKey = "codigo";
     protected $fillable = [
-        'nombre'
+        'nombre',
     ];
-
     public $hidden = ['created_at', 'updated_at'];
     public $timestamps = true;
     public static function getFilteredData($search) {
-        $searchTerm = '%' . $search . '%';
-        return Marca::select('marcas.*')
 
-        ->where('marcas.codigo', 'like', $searchTerm)
-        ->orWhere('marcas.nombre', 'like', $searchTerm);
+        return Categoria::select('categorias.*')
+
+            ->where('categorias.codigo', 'like', $search)
+            ->orWhere('categorias.nombre', 'like', $search);
     }
 
     public static function allDataSearched($search, $sortBy, $sort, $skip, $itemsPerPage) {
@@ -31,7 +33,7 @@ class Marca extends Model
             $query->skip($skip)
                   ->take($itemsPerPage);
         }
-        $query->orderBy("marcas.$sortBy", $sort);
+        $query->orderBy("categorias.$sortBy", $sort);
 
         return $query->get();
 

@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('layouts.app')
 @section('title', 'Categorias')
 @section('content')
 <hr>
@@ -22,27 +22,32 @@
             </div>
         </div>
         <div class="card-body">
-            <table class="table table-hover table-bordered">
+            <table class="table table-hover table-bordered" id="datatables">
                 <thead>
                     <th>Codigo</th>
                     <th>Nombre</th>
                     <th>Acciones</th>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Super Cliente</td>
-                        <td>
-                            <a class="btn btn-sm btn-success edit" path="/categories/edit" data-bs-toggle="modal" data-bs-target="#myModal">
-                                Editar
-                            </a>
-                            <a class="btn btn-sm btn-danger delete" path="/destroy">
-                                Eliminar
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
             </table>
         </div>
     </div>
+@endsection
+@section('scripts')
+<script type="text/javascript">
+    $(document).ready(function () {
+        var ruta = "/categories/show";
+        var columnas = [
+            {
+                data: 'codigo'
+            },
+            {
+                data: 'nombre'
+            },
+            {
+                data: 'codigo'
+            },
+        ]
+        dt = generateDataTable(ruta, columnas);
+    });
+</script>
 @endsection

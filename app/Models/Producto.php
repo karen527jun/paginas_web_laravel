@@ -12,7 +12,7 @@ class Producto extends Model
     //variables
 
     protected $table="productos";
-    protected $primarykey = "codigo";
+    protected $primaryKey = "codigo";
     protected $fillable = [
         'nombre',
         'precio',

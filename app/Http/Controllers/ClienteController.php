@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Marca;
-use App\Models\Producto;
-use Illuminate\Support\Facades\Validator;
+use App\Models\Categoria;
+use App\Models\Cliente;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
-
-class ProductoController extends Controller
+class ClienteController extends Controller
 {
     public function __construct()
     {
@@ -19,43 +19,42 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        return view('products/show');
+        return view('clients/show');
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()//cargar formulario
+    public function create()
     {
-        $marcas = Marca::all();//extraer marcas
-         return view('products/create')->with(['marcas'=>$marcas]);
+        $categorias = Categoria::all();
+        return view('clients/create')->with(['categorias'=>$categorias]);
     }
 
     public function validarCampos($request){
         return Validator::make($request->all(),[
             'nombre' => 'required',
-            'precio' => 'required',
-            'marca' => 'required'
+            'edad' => 'required',
+            'categoria' => 'required'
         ], [
              'nombre.required' => 'Nombre es obligatorio',
-            'precio.required' => 'Precio es obligatorio',
-            'marca.required' => 'Marca es obligatorio'
+            'edad.required' => 'Edad es obligatorio',
+            'categoria.required' => 'Categoria es obligatorio'
         ]);
     }
-
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        $validacion = $this->validarCampos($request);
+         $validacion = $this->validarCampos($request);
         if($validacion->fails()){
             return response()->json([
                 'code'=> 422,
                 'message' => $validacion->messages()
             ],422);
         }else{
-            $producto = Producto::create($request->all());
+            $cliente = Cliente::create($request->all());
             return response()->json([
                  'code'=> 200,
                 'message' => "Se creo el registro correctamente"
@@ -64,16 +63,16 @@ class ProductoController extends Controller
     }
 
     /**
-     * Display the specified resource. string $id
+     * Display the specified resource.
      */
     public function show(Request $request)
     {
-        $itemsPerPage = $request->input('length', 10);//registros por pagina
+         $itemsPerPage = $request->input('length', 10);//registros por pagina
         $skip = $request->input('start', 0);//obtener indice inicial
 
         //para extraer todos los registros
         if ($itemsPerPage == -1) {
-            $itemsPerPage =  Producto::count();
+            $itemsPerPage =  Cliente::count();
             $skip = 0;
         }
 
@@ -86,19 +85,19 @@ class ProductoController extends Controller
         $search = "%$search%";
 
         //get register filtered
-        $filteredCount = Producto::getFilteredData($search)->count();
-        $producto = Producto::allDataSearched($search, $sortBy, $sort, $skip, $itemsPerPage);
+        $filteredCount = Cliente::getFilteredData($search)->count();
+        $cliente = Cliente::allDataSearched($search, $sortBy, $sort, $skip, $itemsPerPage);
         //esto es para reutilizar la funcion para generar datatable en functions.js
-        $producto = $producto->map(function ($producto) {
-            $producto->path = 'products';//sirve para la url de editar y eliminar
-            return $producto;
+        $cliente = $cliente->map(function ($cliente) {
+            $cliente->path = 'clients';//sirve para la url de editar y eliminar
+            return $cliente;
         });
         //se retorna una array estructurado para el data table
         return response()->json([
             'draw' => intval($request->input('draw')),
-            'recordsTotal' => Producto::count(),
+            'recordsTotal' => Cliente::count(),
             'recordsFiltered' => $filteredCount,
-            'data' => $producto]);
+            'data' => $cliente]);
     }
 
     /**
@@ -106,9 +105,9 @@ class ProductoController extends Controller
      */
     public function edit(string $id)
     {
-        $marcas = Marca::all();
-        $producto =  Producto::find($id);
-        return view('products/update')->with(['marcas' =>$marcas,'producto'=> $producto]);
+        $categorias = Categoria::all();
+        $cliente =  Cliente::find($id);
+         return view('clients/update')->with(['categorias' =>$categorias,'cliente'=> $cliente]);
     }
 
     /**
@@ -123,12 +122,12 @@ class ProductoController extends Controller
                 'message' => $validacion->messages()
             ],422);
         }else{
-            $producto = Producto::find($id);
-            if($producto){
-                $producto->update([
+            $cliente = Cliente::find($id);
+            if($cliente){
+                $cliente->update([
                     'nombre'=>$request->nombre,
-                    'precio'=>$request->precio,
-                    'marca'=>$request->marca
+                    'edad'=>$request->edad,
+                    'categoria'=>$request->categoria
                 ]);
                 return response()->json([
                 'code'=> 200,
@@ -148,9 +147,9 @@ class ProductoController extends Controller
      */
     public function destroy(string $id)
     {
-        $producto = Producto::find($id);
-        if($producto){
-            $producto->delete();
+         $cliente = Cliente::find($id);
+        if($cliente){
+            $cliente->delete();
             return response()->json([
                 'code'=> 200,
                 'message' => "Registro actualizado"

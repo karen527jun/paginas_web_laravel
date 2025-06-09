@@ -73,12 +73,83 @@ function addMessageRequired(clases, response){
   i = 0;//contador para el array de messages
   $.each(clases, function (index, value) {//recorrer etiquetas donde va mensaje
     keyAttr = $(this).attr('key');
-    //verificar si existe la key en el object 
+    //verificar si existe la key en el object
     if(Object.hasOwn(response, keyAttr)){ //(&& keyAttr == names[cont])
       $(this).find('strong').text(mesages[i]);
-      i++;//solo aumenta si se agrega el mensaje          
+      i++;//solo aumenta si se agrega el mensaje
     }else{
       $(this).find('strong').text('');
     }
   });
+}
+
+function save_data(url, frm, token){
+    $.ajax({
+        type: "POST",
+        headers: {
+            'X-CSRF-token': token
+        },
+        url: url,
+        data: frm.serialize(),
+        dataType: "json",
+
+    })
+    .done(function (data) {
+        dt.ajax.reload(null, false);
+        $("#myModal").modal('hide');
+        getAlert('success', data.message);
+    })
+    .fail(function (data) {
+        response = data.responseJSON;
+        var clases = frm.find('.invalid-feedback');
+        if(response.code == 422){
+            addMessageRequired(clases, response.message);
+        }else{
+            getAlert('error', response.message);
+        }
+    });
+}
+function save_update(url, frm, token){
+    $.ajax({
+        type: "PUT",
+        headers: {
+            'X-CSRF-token': token
+        },
+        url: url,
+        data: frm.serialize(),
+        dataType: "json",
+
+    })
+    .done(function (data) {
+        dt.ajax.reload(null, false);
+        $("#myModal").modal('hide');
+        getAlert('success', data.message);
+    })
+    .fail(function (data) {
+        response = data.responseJSON;
+        var clases = frm.find('.invalid-feedback');
+        if(response.code == 422){
+            addMessageRequired(clases, response.message);
+        }else{
+            getAlert('error', response.message);
+        }
+    });
+}
+function delete_data(url, token){
+    $.ajax({
+        type: "DELETE",
+        headers: {
+            'X-CSRF-token': token
+        },
+        url: url,
+        dataType: "json",
+
+    })
+    .done(function (data) {
+        dt.ajax.reload(null, false);
+        getAlert('success', data.message);
+    })
+    .fail(function (data) {
+            getAlert('error', data.responseJSON['message']);
+    });
 }
