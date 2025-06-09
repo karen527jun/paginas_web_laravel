@@ -1,8 +1,4 @@
-
-    <h1>Crear</h1>
-    <h5>Formulario para crear Categorias</h5>
-    <hr>
-    <form action="#" method="POST" id="frmSaveData">
+<form action="/marcas" method="POST" id="frmSaveData">
     <div class="row">
         <div class="col">
             <label>Nombre</label>
@@ -26,4 +22,3 @@
         </div>
     </div>
 </form>
-

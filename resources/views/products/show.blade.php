@@ -1,19 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Productos</title>
-</head>
-
-<body>
-    <h1>Productos</h1>
-    <h5>Listado de productos</h5>
+@extends('layouts.app')
+@section('title', 'Productos')
+@section('content')
     <hr>
-    <!-- Imprimimos el nombre del producto -->
-    Producto: <b>{{ $producto }}</b>
-</body>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item "><a href="/">Inicio</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Productos</li>
+        </ol>
+    </nav>
+    <div class="card">
+        <div class="card-header">
+            <div class="row text-center">
+                <div class="col">
+                    <h3>Listado de productos</h3>
+                </div>
+                <div class="col">
+                    <button class="btn btn-md btn-dark" id="addForm" path="/products/create" data-bs-toggle="modal"
+                        data-bs-target="#myModal">
+                        Crear Producto
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover table-bordered" id="datatables">
+                <thead>
+                    <th>Codigo</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Marca</th>
+                    <th>Acciones</th>
+                </thead>
+            </table>
+        </div>
+    </div>
 
-</html>
+@endsection
+@section('scripts')
+<script type="text/javascript">
+    $(document).ready(function () {
+        var ruta = "/products/show";
+        var columnas = [
+            {
+                data: 'codigo'
+            },
+            {
+                data: 'nombre'
+            },
+            {
+                data: 'precio'
+            },
+            {
+                data: 'marca'
+            },
+            {
+                data: 'codigo'
+            }
+        ]
+        dt = generateDataTable(ruta, columnas);
+    });
+</script>
+@endsection

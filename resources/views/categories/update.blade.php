@@ -1,17 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Categorias</title>
-</head>
-
-<body>
-    <h1>Modificar</h1>
-    <h5>Formulario para actualizar categorias</h5>
+    <form action="/categories/{{$categoria->codigo}}" method="POST" id="frmUpdateData">
+    <div class="row">
+        <div class="col">
+            <label>Nombre</label>
+            <input type="text" name="nombre" class="form-control" value="{{$categoria->nombre}}">
+            <span class="invalid-feedback d-block" key="nombre" role="alert">
+                <strong class="mensaje"></strong>
+            </span>
+        </div>
+    </div>
     <hr>
-</body>
+    <div class="row text-center">
+        <div class="col">
+            <button type="submit" class="btn btn-lg btn-success">
+                Guardar
+            </button>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-lg btn-danger" data-bs-dismiss="modal">
+                Cancelar
+            </button>
+        </div>
+    </div>
+</form>
 
-</html>

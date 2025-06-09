@@ -1,17 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clientes</title>
-</head>
-
-<body>
-    <h1>Clientes</h1>
-    <h5>Listado de clientes</h5>
+@extends('layouts.app')
+@section('title', 'Clients')
+@section('content')
     <hr>
-</body>
-
-</html>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item "><a href="/">Inicio</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Clientes</li>
+        </ol>
+    </nav>
+    <div class="card">
+        <div class="card-header">
+            <div class="row text-center">
+                <div class="col">
+                    <h3>Listado de clientes</h3>
+                </div>
+                <div class="col">
+                    <button class="btn btn-md btn-dark" id="addForm" path="/clients/create" data-bs-toggle="modal"
+                        data-bs-target="#myModal">
+                        Crear Cliente
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover table-bordered" id="datatables">
+                <thead>
+                    <th>Codigo</th>
+                    <th>Nombre</th>
+                    <th>Edad</th>
+                    <th>Categoría</th>
+                    <th>Acciones</th>
+                </thead>
+            </table>
+        </div>
+    </div>
+@endsection
+@section('scripts')
+<script type="text/javascript">
+    $(document).ready(function () {
+        var ruta = "/clients/show";
+        var columnas = [
+            {
+                data: 'codigo'
+            },
+            {
+                data: 'nombre'
+            },
+            {
+                data: 'edad'
+            },
+            {
+                data: 'categoria'
+            },
+            {
+                data: 'codigo'
+            }
+        ]
+        dt = generateDataTable(ruta, columnas);
+    });
+</script>
+@endsection
